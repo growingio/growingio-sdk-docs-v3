@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkgrowingio_sdk_doc=self.webpackChunkgrowingio_sdk_doc||[]).push([[8598],{2841:o=>{o.exports=JSON.parse('{"permalink":"/growingio-sdk-docs-saas/blog/tags/custom","page":1,"postsPerPage":10,"totalPages":1,"totalCount":2,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
