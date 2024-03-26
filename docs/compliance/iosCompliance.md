@@ -74,7 +74,7 @@ iOS SDK 采集的用户行为数据支持设置发送间隔(最小可设置5秒)
 ## 其他说明
 
 ### 关于 Privacy manifest 隐私清单
-SDK 内置了 privacy manifest，采用 Cocoapods/Swift Package Manager 方式进行集成，即可自动导入到您生成的 App 产物中
+采集 SDK 版本>=3.7.0 内置了 privacy manifest，采用 Cocoapods/Swift Package Manager 方式进行集成，即可自动导入到您生成的 App 产物中
 
 ### 关于 GDPR
 为符合
