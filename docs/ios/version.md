@@ -3,6 +3,15 @@ title: 版本记录
 sidebar_position: 0
 ---
 ----
+
+# [3.8.3](https://github.com/growingio/growingio-sdk-ios-autotracker/compare/3.8.2...3.8.3) (2024-07-18)
+
+
+### Bug Fixes
+
+* ANLSPI-20159 remove NSLog on release mode (https://github.com/growingio/growingio-sdk-ios-autotracker/commit/b0c2c6a24c811a8ffe1c5d31d89ddd17aa7c1b32)
+* ANLSPI-20126 do not send autotrack event when session state is not active (https://github.com/growingio/growingio-sdk-ios-autotracker/commit/1ae98f066d979c724aba9598f038e4781dac38d9)
+
 # [3.8.2](https://github.com/growingio/growingio-sdk-ios-autotracker/compare/3.8.1...3.8.2) (2024-05-23)
 
 
