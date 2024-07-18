@@ -12,6 +12,7 @@ Flutter SDK 提供了无埋点 SDK 和埋点 SDK 两个版本：
 ## 版本记录
 |    版本    | 说明 |  日期  |
 |:-------:| :----  |  :-------:  |
+| v2.1.1 | - 修复 Android 端在多进程下 flutter 应用无法刷新session的问题<br/>- 修复 iOS 端后台状态下触发PAGE导致Session未刷新的问题 | 2024-07-18 |
 | v2.1.0 | - 修复应用从后台回到前台时，补发的 PAGE timestamp 未刷新 | 2024-04-23 |
 | v1.1.3 | - 修复 iOS 在元素位置信息为 NaN 情况下出现圈选界面不刷新<br/>- 修复 UrlScheme 多环境配置 | 2023-10-18 |
 | V1.1.0 | - 原生 SDK 升级至 3.5.0；<br/>- 修复由于 Android SDK 升级导致的 Android Flutter plugin 类的签名不匹配；<br/>- 修复 iOS 从前台到挂起状态下直接杀死 App 异常崩溃捕获。 | 2023-07-26 |
