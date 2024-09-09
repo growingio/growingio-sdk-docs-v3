@@ -131,19 +131,19 @@ GrowingAnalytics.track('buyProduct3', attributes)
 
 ### 事件计时器
 
-`static async trackTimerStart(eventName: string): Promise<string>`
+`static trackTimerStart(eventName: string): string`
 
 初始化一个事件计时器，参数为计时事件的事件名称，返回值为该事件计时器唯一标识
 
-`static async trackTimerPause(timerId: string)`
+`static trackTimerPause(timerId: string)`
 
 暂停事件计时器，参数为 trackTimer 返回的唯一标识
 
-`static async trackTimerResume(timerId: string)`
+`static trackTimerResume(timerId: string)`
 
 恢复事件计时器，参数为 trackTimer 返回的唯一标识
 
-`static async trackTimerEnd(timerId: string, attributes: GrowingAttrType = {})`
+`static trackTimerEnd(timerId: string, attributes: GrowingAttrType = {})`
 
 停止事件计时器，参数为 trackTimer 返回的唯一标识。调用该接口会自动触发删除定时器。
 
@@ -168,7 +168,7 @@ GrowingAnalytics.track('buyProduct3', attributes)
 #### 示例
 
 ```typescript
-let timerId = await GrowingAnalytics.trackTimerStart('eventName')
+let timerId = GrowingAnalytics.trackTimerStart('eventName')
 GrowingAnalytics.trackTimerPause(timerId)
 GrowingAnalytics.trackTimerResume(timerId)
 GrowingAnalytics.trackTimerEnd(timerId)
@@ -292,4 +292,26 @@ Web({ src: url, controller: this.controller})
   .javaScriptProxy(GrowingAnalytics.createHybridProxy(this.controller))
 ```
 
-对应的 H5 页面需要集成 Web JS SDK 以及 App 内嵌页打通插件才能生效
+> 对应的 H5 页面需要集成 Web JS SDK 以及 App 内嵌页打通插件才能生效
+
+如果您需要注入多个 JavaScript 对象或者通过 permission 配置权限管控，请在 `onControllerAttached` 回调中使用 `registerJavaScriptProxy` 进行注入 hybrid：
+```typescript
+let url = 'https://www.example.com'
+// 通过permission配置权限管控
+let permission = 'Your Permission'
+Web({ src: url, controller: this.controller})
+  .javaScriptAccess(true)
+  .domStorageAccess(true)
+  .onControllerAttached(() => {
+    let proxy = GrowingAnalytics.createHybridProxy(this.controller)
+    if (proxy) {
+      this.controller.registerJavaScriptProxy(proxy.object, proxy.name, proxy.methodList, [], permission)
+    }
+
+    // 如果需要注入多个JavaScript对象
+    let yourProxy = new YourProxy()
+    if (yourProxy) {
+      this.controller.registerJavaScriptProxy(yourProxy.object, yourProxy.name, yourProxy.methodList, yourProxy.asyncMethodList, permission)
+    }
+  })
+```
