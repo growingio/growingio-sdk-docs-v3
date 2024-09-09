@@ -24,10 +24,10 @@ sidebar_position: 0
 * 事件计时器相关外部接口从异步调用方式改为同步，需要更换集成方式 (内部接口更换已废弃的 API `systemDatetime.getRealTime` 为 `systemDatetime.getUptime`)
 * 事件数据库开启加密，与 1.x 版本的事件数据库不兼容，集成 2.0.0 之后 1.x 版本未发送的事件将丢弃
 :::info
-当用非加密方式打开一个已有的加密数据库时，会返回错误码14800011，表示数据库损坏。此时用加密方式可以正常打开该数据库。
-
-https://developer.huawei.com/consumer/cn/doc/harmonyos-references-V5/js-apis-data-relationalstore-V5#storeconfig
+当用非加密方式打开一个已有的加密数据库时，会返回错误码14800011，表示数据库损坏。此时用加密方式可以正常打开该数据库。<br/>
+*https://developer.huawei.com/consumer/cn/doc/harmonyos-references-V5/js-apis-data-relationalstore-V5#storeconfig*
 :::
+
 * 使用推荐的 [rcp](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/remote-communication-kit-guide-V5)(Remote Communication Kit 远场通信服务) 替换 `@ohos.net.http` 进行事件网络请求
 * 初始化配置项 `requestOptions.readTimeout` 重命名为 `requestOptions.transferTimeout`，以符合 `rcp.Configuration.transfer` 对应的配置项名称
 
