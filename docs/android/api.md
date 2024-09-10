@@ -35,8 +35,18 @@ GrowingAutotracker.get().trackTimerEnd("timerId")
 GrowingAutotracker.get().removeTimer("timerId")
 GrowingAutotracker.get().clearTrackTimer()
 GrowingAutotracker.get().doDeepLinkByUrl("Your DeepLinkUrl", new DeepLinkCallback())
+GrowingAutotracker.get().setGeneralProps(new HashMap<>())
+GrowingAutotracker.get().removeGeneralProps("key1", "key2")
+GrowingAutotracker.get().clearGeneralProps()
+GrowingAutotracker.get().setDynamicGeneralPropsGenerator(new DynamicGeneralPropsGenerator())
+
+GrowingAutotracker.get().autotrackPage(activity, "alias", new HashMap<>())
+GrowingAutotracker.get().autotrackPage(androidx.fragment.app.Fragment, "alias", new HashMap<>())
+GrowingAutotracker.get().autotrackSystemPage(android.app.Fragment, "alias", new HashMap<>())
+GrowingAutotracker.get().autotrackSupportPage(android.support.v4.app.Fragment, "alias", new HashMap<>())
 
 GrowingAutotracker.get().registerComponent(module,<config>)
+
 ```
 
 ### 埋点SDK API列表
@@ -59,6 +69,10 @@ GrowingTracker.get().trackTimerEnd("timerId")
 GrowingTracker.get().removeTimer("timerId")
 GrowingTracker.get().clearTrackTimer()
 GrowingTracker.get().doDeepLinkByUrl("Your DeepLinkUrl", new DeepLinkCallback())
+GrowingTracker.get().setGeneralProps(new HashMap<>())
+GrowingTracker.get().removeGeneralProps("key1", "key2")
+GrowingTracker.get().clearGeneralProps()
+GrowingTracker.get().setDynamicGeneralPropsGenerator(new DynamicGeneralPropsGenerator())
 
 GrowingTracker.get().registerComponent(module,<config>)
 ```
@@ -640,3 +654,190 @@ GrowingAutotracker.get().registerComponent(module,<config>)
 GrowingTracker.get().registerComponent(module,<config>)
 ```
 
+
+### 20. 全局静态通用属性
+当设置了静态属性后将会为所有的事件添加属性，直到调用删除通用属性接口来清空。
+静态属性值只保存在内存中，不会保存至应用数据存储中，所以需要应用每次启动后重新设置。
+
+`setGeneralProps`<br/>
+设置全局静态通用属性
+
+`clearGeneralProps`<br/>
+清空全局静态通用属性
+
+`removeGeneralProps`<br/>
+删除指定静态通用属性
+
+#### 参数说明
+| 参数        | 参数类型 | 说明                 |
+| :---------- | :------- | :------------------- |
+| `variables` | _Map{'<'}String, String{'>'}_ | 设置静态通用属性信息 |
+| `keys`      | _String..._ | 删除指定静态通用属性|
+
+#### 示例
+
+**SDK示例代码：**
+```java
+// 设置全局静态通用属性
+Map<String, String> map = new HashMap<>();
+map.put("gender", "male");
+map.put("age", "12");
+GrowingAutotracker.get().setGeneralProps(map);
+// 删除指定全局静态通用属性
+GrowingAutotracker.get().removeGeneralProps("gender", "age");
+// 清空全局静态通用属性
+GrowingAutotracker.get().clearGeneralProps();
+```
+
+### 21. 全局动态通用属性
+与全局静态通用属性相似，设置后将会为所有的事件添加属性。不同的是全局动态通用属性传入的为回调函数，每次获取时会调用函数动态获取相应的值。
+
+`setDynamicGeneralPropsGenerator`<br/>
+设置动态通用属性回调
+
+#### 参数说明
+| 参数        | 参数类型 | 说明                 |
+| :---------- | :------- | :------------------- |
+| `generator` | _DynamicGeneralPropsGenerator_ | 设置动态通用属性回调 |
+
+#### 示例
+
+**SDK示例代码：**
+<Tabs
+  groupId="code-language"
+  defaultValue="kotlin"
+  values={[
+    {label: 'java', value: 'java'},
+    {label: 'kotlin', value: 'kotlin'},
+  ]
+}>
+
+<TabItem value="java">
+
+```java
+// 设置全局静态通用属性
+GrowingAutotracker.get().setDynamicGeneralPropsGenerator(new DynamicGeneralPropsGenerator() {
+    @Override
+    public Map<String, String> generateDynamicGeneralProps() {
+        HashMap map = getYourMapLogic();
+        return map;
+    }
+});
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+GrowingAutotracker.get().setDynamicGeneralPropsGenerator(object : DynamicGeneralPropsGenerator {
+    override fun generateDynamicGeneralProps(): Map<String, String>? {
+        val map = getYourMapLogic();
+        return map
+    }
+})
+```
+
+</TabItem>
+</Tabs>
+
+### 1. 采集页面事件
+`autotrackPage`, `autotrackSystemPage`, `autotrackSupportPage`<br/>
+从 4.0.0 版本开始，无埋点SDK不再自动采集App的内部页面，需要开发者手动调用接口声明才会发送 `Page` 事件。
+
+#### 参数说明
+| 参数    | 参数类型                  | 是否必填 | 说明          |
+| :------ | :---------------------- | :---:  | :---------------|
+| `page`  | _Activity_ / _Fragment_ | 是      | 需要采集的页面对象 |
+| `alias` | _String_                | 是      | 采集的页面名称    |
+| `attributes` | _Map{'<'}String, String{'>'}_ |  否  | 页面的属性信息，可选|
+
+在Android系统中，可以采集的页面主要为 `Activity`,`Fragment`(包括support，app的和androidx包下)。同时需要开发者为每一个页面指定一个名称，用于分析云平台页面数据处理。<br/>
+为了保证页面信息的准确性，推荐在页面的 `onCreate` 中调用采集页面事件接口。
+
+#### 示例
+
+**SDK示例代码：**
+<Tabs
+  groupId="code-language"
+  defaultValue="kotlin"
+  values={[
+    {label: 'java', value: 'java'},
+    {label: 'kotlin', value: 'kotlin'},
+  ]
+}>
+
+<TabItem value="java">
+
+```java
+@Override
+ protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        //  ...
+        Map<String, String> map = new HashMap<>();
+        map.put("key", "value");
+        String alias = "DemoActivity"; // getClass().getSimpleName();
+        GrowingAutotracker.get().autotrackPage(this, alias, map);
+}
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // ...
+        val map = hashMapOf("key" to "value")
+        val alias = "DemoActivity" //this.javaClass.simpleName
+        GrowingAutotracker.get().autotrackPage(this, alias, map) 
+}
+```
+
+</TabItem>
+</Tabs>
+
+
+### 23. 属性工具
+AttributesBuilder是SDK提供给用户协助设置属性的工具类，支持传入多种类型属性值(包含列表类型)
+
+`addAttribute`<br/>
+添加属性
+
+`removeAttribute`<br/>
+删除指定属性
+
+`clear`<br/>
+清空属性
+
+`size`<br/>
+返回当前设置的属性个数
+
+`build`<br/>
+返回设置埋点事件API所需属性参数类型对应的数据结构
+
+#### 示例
+
+**SDK示例代码：**
+```java
+AttributesBuilder builder = new AttributesBuilder();
+// 设置属性
+Map<String, Object> map = new HashMap<>();
+map.put("Key", "Value");
+builder.addAttribute(map);
+builder.addAttribute("String", "1");
+builder.addAttribute("List", Arrays.asList("1", "2"));
+builder.addAttribute("Set", Set.of("1", "2"));
+builder.addAttribute("JSONArray", new JSONArray());
+builder.addAttribute("SparseArray", new SparseArray<>());
+builder.addAttribute("String[]", new String[]{"1", "2"});
+// 删除指定属性
+builder.removeAttribute("Key");
+// 清除属性
+builder.clear();
+// 返回当前设置的属性个数
+builder.size();
+// 发送埋点
+GrowingAutotracker.get().trackCustomEvent("registerSuccess", builder.build());
+```

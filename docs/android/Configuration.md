@@ -35,6 +35,8 @@ import TabItem from '@theme/TabItem';
 | `addPreloadComponent`          | `LibraryGioModule` |    否    | `null`  | 注册自定义/预定义模块(如加密模块、OAID模块)       | -         | <font color='red'>>= 3.3.4</font>  |
 | `addPreloadComponent`          | `LibraryGioModule`,`Configurable` |    否  | `null` | 注册自定义/预定义模块及其配置文件 | - | <font color='red'>>= 3.4.3</font>  |
 | `setWebViewBridgeEnabled`       | `boolean`                         |    否    | `true`                          | 是否全量采集 hybrid 数据                      | 无埋点独有 | <font color='red'>>= 3.5.1</font>   |
+| `setRequestTimeout`             | `int`,`TimeUnit`  |   否      | `30s` | 网络数据发送超时设置 |  <font color='red'>>= 4.0.0</font>  |
+| `setDataValidityPeriod`         | _int_             |    否    | `7`    | 未发送的数据保留在数据库的时间，单位：天数 | <font color='red'>>= 4.3.0</font> |
 
 ### 1. SDK必需参数
 
@@ -169,3 +171,44 @@ GrowingAutotracker.startWithConfiguration(this,
 
 无埋点默认会采集对应 webview 的 hybrid 事件，设置为 false，可以关闭采集 hybrid 数据。
 如果需要设置采集单个 webview 的 hybrid 事件，可以通过运行时 API 接口`bridgeWebView(View webView)`开启采集。
+
+### 15. **setRequestTimeout**
+
+设置请求超时时长，默认30s。
+
+```java
+GrowingAutotracker.startWithConfiguration(this,
+        new CdpAutotrackConfiguration("accountId", "urlScheme")
+        // 设置网络请求超时
+        .setRequestTimeout(30,TimeUnit.SECONDS)
+        // 或者在使用okHttp请求库时，可以详细设置请求超时时间
+        .setRequestDetailTimeout(10, 10, 10, TimeUnit.SECONDS)
+
+);
+```
+
+> 当使用默认 Okhttp 请求库时，可以使用 `setRequestDetailTimeout(10, 10, 10, TimeUnit.SECONDS)` 接口，其值分别对应 Okhttp 网络库的请求超时设置 `connectTimeout`, `readTimeout`, `writeTimeout`
+
+### 16. **setDataValidityPeriod**
+
+设置未发送的数据保留在数据库的时间，单位：天数，默认7天。
+
+```java
+GrowingAutotracker.startWithConfiguration(this,
+        new CdpAutotrackConfiguration("accountId", "urlScheme")
+        // 设置未发送事件缓存时长
+        .setDataValidityPeriod(7)
+
+);
+```
+
+### 17. **setAutotrack**
+若是不需要无埋点相关功能，客户可以通过在初始化时关闭无埋点来实现。请注意，关闭无埋点功能后，无埋点事件包括页面事件，自动点击事件，Imp曝光事件不再上报以及圈选功能都将一起关闭。
+
+```java
+GrowingAutotracker.startWithConfiguration(this,
+        new CdpAutotrackConfiguration("accountId", "urlScheme")
+        // 关闭无埋点功能
+        .setAutotrack(false)
+);
+```
