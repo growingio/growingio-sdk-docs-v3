@@ -4,6 +4,14 @@ sidebar_position: 0
 ---
 ----
 
+## [3.8.6](https://github.com/growingio/growingio-sdk-ios-autotracker/compare/3.8.5...3.8.6) (2024-11-19)
+
+
+### Bug Fixes
+
+* SIGKILL signal caused by synchronous waiting in device-orientation logic ([#337](https://github.com/growingio/growingio-sdk-ios-autotracker/issues/337)) ([d4d206d](https://github.com/growingio/growingio-sdk-ios-autotracker/commit/d4d206dd620cc118e51ba29329761ca758654e7e))
+
+
 ## [3.8.5](https://github.com/growingio/growingio-sdk-ios-autotracker/compare/3.8.4...3.8.5) (2024-09-29)
 
 
