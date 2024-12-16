@@ -14,7 +14,8 @@ GrowingIO 专注于零售、电商、金融、酒旅航司、教育、内容社�
 
 GrowingIO 帮助客户提升数据驱动能力，实现更好的增长。
 
-![slogan](https://docs.growingio.com/.gitbook/assets/-LGNxeGABUADKiTWTaEM-LIEN5IgjD_lm1zFG-YX-LIEN8O7RZ9ipiI48vpk45_4_conversion_1_.gif)
+![slogan](/img/conversion.gif)
+
 
 ## SDK 简介
 
