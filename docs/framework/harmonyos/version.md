@@ -5,10 +5,6 @@ sidebar_position: 0
 
 ## [2.5.0](https://github.com/growingio/growingio-sdk-harmonyos/tree/2.5.0) (2025-09-24)
 
-### Features 功能
-
-* feat: 新增 setPageTitle 接口，用于手动设置页面标题
-
 ### Bug Fixes 修复
 
 * chore: buildOption.arkOptions.byteCodeHar 改为 true，再次启用作为字节码 har 发布
