@@ -4,6 +4,13 @@ sidebar_position: 0
 ---
 ----
 
+## [3.9.0](https://github.com/growingio/growingio-sdk-ios-autotracker/compare/3.8.6...3.9.0) (2025-10-15)
+
+### Features
+
+* 改用系统通知来监听 VIEW_CHANGE 事件 ([#355](https://github.com/growingio/growingio-sdk-ios-autotracker/issues/355)) ([81283c0](https://github.com/growingio/growingio-sdk-ios-autotracker/commit/48e586078256aa5713cb4597791131c007ea0e02))
+
+
 ## [3.8.6](https://github.com/growingio/growingio-sdk-ios-autotracker/compare/3.8.5...3.8.6) (2024-11-19)
 
 
