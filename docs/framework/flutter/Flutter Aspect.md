@@ -70,7 +70,7 @@ import TabItem from '@theme/TabItem';
 
 <TabItem value="automatic">
 
-请下载我们的帮助脚本 growingio_flutter_script.sh (位于仓库的根目录下, 版本之间有差异，务必切换到 Flutter 版本对应的 tag)，运行后脚本会自动帮助你覆盖 Flutter SDK 中需要替换的文件。
+请下载我们的帮助脚本 growingio_flutter_script.sh (位于仓库的根目录下，版本之间有差异，务必切换到 Flutter 版本对应的 tag)，运行后脚本会自动帮助你覆盖 Flutter SDK 中需要替换的文件。
 
 ```shell
 $ chmod 777 growingio_flutter_script.sh
