@@ -4,6 +4,15 @@ sidebar_position: 0
 ---
 ----
 
+## [3.9.1](https://github.com/growingio/growingio-sdk-ios-autotracker/compare/3.9.0...3.9.1) (2025-11-03)
+
+
+### Bug Fixes
+
+* VIEW_CLICK 事件忽略 TextInputUI 下的私有组件 ([#356](https://github.com/growingio/growingio-sdk-ios-autotracker/issues/356))
+* 移除使用 GrowingUtils 中已废弃的接口 ([#356](https://github.com/growingio/growingio-sdk-ios-autotracker/issues/356))
+
+
 ## [3.9.0](https://github.com/growingio/growingio-sdk-ios-autotracker/compare/3.8.6...3.9.0) (2025-10-15)
 
 ### Features
