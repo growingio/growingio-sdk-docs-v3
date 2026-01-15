@@ -14,13 +14,14 @@ GrowingIO 专注于零售、电商、金融、酒旅航司、教育、内容社�
 
 GrowingIO 帮助客户提升数据驱动能力，实现更好的增长。
 
-![slogan](https://docs.growingio.com/.gitbook/assets/-LGNxeGABUADKiTWTaEM-LIEN5IgjD_lm1zFG-YX-LIEN8O7RZ9ipiI48vpk45_4_conversion_1_.gif)
+![slogan](/img/conversion.gif)
+
 
 ## SDK 简介
 
 ### SDK支持范围
 
-SDK 包括客户端SDK和服务端SDK。目前客户端SDK支持Android和iOS原生，Web JS，小程序，以及众多第三方混合开发框架。服务端SDK支持Java、PHP、Python。
+SDK 包括客户端SDK和服务端SDK。目前客户端SDK支持Android和iOS原生，Web JS，小程序，以及众多第三方混合开发框架。服务端SDK支持Java、PHP、Python、Go。
 
 小程序支持微信小程序、阿里(支付宝)小程序、百度小程序、抖音小程序、QQ小程序、淘宝小程序、快手小程序、京东小程序、快应用。
 
@@ -85,6 +86,7 @@ QQ小程序支持的开发框架如下：
 |Java        | - | - | - | - | - | ✅ | ✅ | - | - | - |
 |PHP         | - | - | - | - | - | ✅ | ✅ | - | - | - |
 |Python      | - | - | - | - | - | ✅ | ✅ | - | - | - |
+|Go          | - | - | - | - | - | ✅ | ✅ | - | - | - |
 
 :::info 注意
 关于事件类型说明请查看[**事件模型**](/docs/basicknowledge/eventModel)，事件包含字段信息请查看[**测量协议**](/docs/Measurement%20Protocol) <br/>
