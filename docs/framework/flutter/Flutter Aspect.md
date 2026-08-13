@@ -11,7 +11,7 @@ title: Flutter Aspect 集成
 然后再根据你开发使用的 Flutter 版本，切换到相应的 tag 分支上。
 
 :::info
-目前支持 Flutter SDK 版本为 [v3.35.3](https://github.com/growingio/growingio-dart-frontend/tree/3.35.3)，[v3.24.1](https://github.com/growingio/growingio-dart-frontend/tree/3.24.1)，[v3.22.1](https://github.com/growingio/growingio-dart-frontend/tree/3.22.1) 以及 [v3.3.0](https://github.com/growingio/growingio-dart-frontend/tree/3.3.0) 至 [v3.19.6](https://github.com/growingio/growingio-dart-frontend/tree/3.19.6) 间大部分主要版本.
+目前支持 Flutter SDK 版本为 [v3.44.4](https://github.com/growingio/growingio-dart-frontend/tree/3.44.4)，[v3.35.3](https://github.com/growingio/growingio-dart-frontend/tree/3.35.3)，[v3.24.1](https://github.com/growingio/growingio-dart-frontend/tree/3.24.1)，[v3.22.1](https://github.com/growingio/growingio-dart-frontend/tree/3.22.1) 以及 [v3.3.0](https://github.com/growingio/growingio-dart-frontend/tree/3.3.0) 至 [v3.19.6](https://github.com/growingio/growingio-dart-frontend/tree/3.19.6) 间大部分主要版本.
 
 后续将随着 Flutter SDK 的更新会持续推出新的版本，若需要支持特定的 Flutter 版本，请在 [Github Issues](https://github.com/growingio/growingio-dart-frontend/issues) 中提交请求或者向客户成功经理咨询方案。
 :::
@@ -25,7 +25,7 @@ import TabItem from '@theme/TabItem';
 
 首先，请访问我们的 [Growingio-Dart-Frontend](https://github.com/growingio/growingio-dart-frontend)，该项目的 tag 对应 Flutter 版本，请根据自己项目的 Flutter 版本切换到相应 tag。
 
-> 比如 Flutter 3.35.3 版本，则切换到 [tree/3.35.3](https://github.com/growingio/growingio-dart-frontend/tree/3.35.3)
+> 比如 Flutter 3.44.4 版本，则切换到 [tree/3.44.4](https://github.com/growingio/growingio-dart-frontend/tree/3.44.4)
 
 <Tabs
   className="unique-tabs"
