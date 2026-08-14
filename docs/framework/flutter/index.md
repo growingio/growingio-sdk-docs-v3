@@ -12,6 +12,8 @@ Flutter SDK 提供了无埋点 SDK 和埋点 SDK 两个版本：
 ## 版本记录
 |    版本    | 说明 |  日期  |
 |:-------:| :----  |  :-------:  |
+| v2.2.0 | - iOS 支持 Swift Package Manager 集成，CocoaPods 集成方式保持兼容；<br/>- GrowingIO iOS SDK 升级到 3.9.2；<br/>- 新增 HarmonyOS 平台支持（CDP 模式下仅支持埋点采集，无埋点与圈选暂不支持）；<br/>- iOS 广告模块改为运行时解耦，未集成时 doDeepLinkByUrl 安全降级不再崩溃 | 2026-08-14 |
+| v2.1.3 | - 修复 Android 高版本 AGP 下不再支持在 AndroidManifest.xml 中通过 package 属性设置 namespace | 2025-03-24 |
 | v2.1.2 | - 修复 Android 在多进程下 session 未正常刷新<br/>- 修复 iOS 在后台状态下生成 PAGE 将导致访问时长过长 | 2024-07-22 |
 | v2.1.0 | - 修复应用从后台回到前台时，补发的 PAGE timestamp 未刷新 | 2024-04-23 |
 | v1.1.3 | - 修复 iOS 在元素位置信息为 NaN 情况下出现圈选界面不刷新<br/>- 修复 UrlScheme 多环境配置 | 2023-10-18 |

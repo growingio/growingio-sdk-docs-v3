@@ -34,7 +34,7 @@ import TabItem from '@theme/TabItem';
 
 ```c
 dependencies:
-  growingio_autotracker_flutter_plugin: '2.1.2'
+  growingio_autotracker_flutter_plugin: '2.2.0'
 ```
 
 </TabItem>
@@ -43,7 +43,7 @@ dependencies:
 
 ```c
 dependencies:
-  growingio_tracker_flutter_plugin: '2.1.2'
+  growingio_tracker_flutter_plugin: '2.2.0'
 ```
 
 </TabItem>
@@ -55,13 +55,15 @@ dependencies:
 <details>
   <summary>点击查看Growingio Flutter 插件和 SDK 版本的依赖关系</summary>
 
-  | Flutter 插件版本 |  Android SDK 版本范围   |  iOS SDK 版本范围  |
-  | :-------------- | :----------------- | :------: |
-  | = v1.0.0 | >= v3.4.7 | >= v3.4.8 |
-  | = v1.1.0 | >= v3.5.0 | >= v3.5.0 |
-  | = v1.1.3 | >= v3.5.0 | >= v3.5.0 |
-  | = v2.1.0 | >= v3.5.0 | >= v3.5.0 |
-  | = v2.1.2 | >= v3.5.0 | >= v3.8.3 |
+  | Flutter 插件版本 |  Android SDK 版本范围   |  iOS SDK 版本范围  | HarmonyOS SDK 版本范围 |
+  | :-------------- | :----------------- | :------: | :------: |
+  | = v1.0.0 | >= v3.4.7 | >= v3.4.8 | — |
+  | = v1.1.0 | >= v3.5.0 | >= v3.5.0 | — |
+  | = v1.1.3 | >= v3.5.0 | >= v3.5.0 | — |
+  | = v2.1.0 | >= v3.5.0 | >= v3.5.0 | — |
+  | = v2.1.2 | >= v3.5.0 | >= v3.8.3 | — |
+  | = v2.1.3 | >= v3.5.0 | >= v3.8.3 | — |
+  | = v2.2.0 | >= v3.5.0 | 3.9.x（>= v3.9.2） | 2.9.x |
 
 </details>
 
@@ -175,6 +177,89 @@ apply plugin: 'com.growingio.android.autotracker'
 
 </details>
 
+### iOS 集成方式说明
+
+从 v2.2.0 起，插件同时支持 Swift Package Manager（SPM）与 CocoaPods 两种 iOS 原生依赖管理方式，均无需在 iOS 工程中手动添加 GrowingIO 原生 SDK 依赖。
+
+**Flutter 3.44 及以上（默认 SPM 模式）**
+
+添加依赖后无需任何额外操作，构建时 Flutter 会自动通过 SPM 引入插件及原生 GrowingAnalytics SDK（要求原生 SDK ≥ 3.9.2）。旧工程首次构建时 Flutter 会自动完成 SPM 集成迁移。
+
+:::caution
+如果 Podfile 中曾手动添加过 `pod 'GrowingAnalytics-cdp/...'` 或 `pod 'GrowingAnalytics/...'`，SPM 模式下必须删除这些行，否则 SDK 会被集成两份，链接时报 duplicate symbols。
+:::
+
+**Flutter 3.44 以下，或手动禁用了 SPM**
+
+继续通过 CocoaPods 集成，行为与旧版本完全一致，同样无需额外操作。禁用 SPM 的方式：
+
+```yaml
+# pubspec.yaml
+flutter:
+  config:
+    enable-swift-package-manager: false
+```
+
+**原生 + Flutter 混合开发**
+
+CocoaPods 模式下原生代码可直接 `import GrowingAutotracker`；SPM 模式下插件的依赖对 app target 默认不可见，若原生代码需要直接调用 SDK API，请在 Xcode 中 File → Add Package Dependencies… → 输入 `https://github.com/growingio/growingio-sdk-ios-autotracker.git`（版本 3.9.2 起）→ 勾选 `GrowingAutotracker_cdp`（无埋点）或 `GrowingTracker_cdp`（埋点）产品添加到 app target。SPM 会自动与插件已依赖的同一个包去重，不会产生重复代码。
+
+### HarmonyOS 集成说明
+
+从 v2.2.0 起，插件支持 HarmonyOS 平台，桥接 HarmonyOS 原生 SDK [@growingio/analytics](https://github.com/growingio/growingio-sdk-harmonyos)（CDP 模式）。
+
+:::caution
+**HarmonyOS 平台 CDP 模式目前仅支持埋点采集**，暂不支持无埋点采集（PAGE / VIEW_CLICK / VIEW_CHANGE）与圈选（服务端限制），因此无需替换 AOP snapshot；扫码数据校验（MobileDebugger）不受影响。<br/>
+此外，HarmonyOS 平台暂不支持 `doDeepLinkByUrl`（广告归因）与初始化后动态注册组件（`registerComponent`）。加解密（`EncoderLibraryGioModule`）、Protobuf（`ProtobufLibraryModule`）等组件请在 `startWithConfiguration` 的 `modules` 参数中配置。
+:::
+
+1. 需使用支持 HarmonyOS 的 Flutter SDK（如 3.7.12-ohos / 3.22.x-ohos），在 Flutter 工程的 `ohos` 目录下构建。
+2. 原生 SDK 依赖由插件自动引入，初始化时 `dataCollectionServerHost` 为必传参数。
+3. 插件在注册时会自动通过 `FlutterPluginBinding` 获取 applicationContext 用于初始化原生 SDK，无需额外配置。
+4. 如需使用扫码数据校验（MobileDebugger），URL Scheme 配置分两部分。首先在 `module.json5` 中 EntryAbility 对应的 skills 添加 URL Scheme：
+
+```json
+{
+  "actions": [
+    "ohos.want.action.viewData"
+  ],
+  "uris": [
+    {
+      "scheme": "Your URL Scheme",
+      "host": "growingio/webservice"
+    }
+  ]
+}
+```
+
+然后在 FlutterAbility 的 `onCreate`/`onNewWant` 中将 uri 传递给 SDK：
+
+```typescript
+import { FlutterAbility } from '@ohos/flutter_ohos'
+import Want from '@ohos.app.ability.Want'
+import AbilityConstant from '@ohos.app.ability.AbilityConstant'
+import { GrowingAnalytics } from 'growingio_autotracker_flutter_plugin'
+
+export default class EntryAbility extends FlutterAbility {
+  onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    super.onCreate(want, launchParam)
+    let uri = want?.uri
+    if (uri) {
+      GrowingAnalytics.handleOpenURL(uri)
+    }
+  }
+
+  onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    super.onNewWant(want, launchParam)
+    let uri = want?.uri
+    if (uri) {
+      GrowingAnalytics.handleOpenURL(uri)
+    }
+  }
+}
+```
+
+> 埋点 SDK 请将上方 import 中的 `growingio_autotracker_flutter_plugin` 替换为 `growingio_tracker_flutter_plugin`。
 
 ### Flutter 插件初始化
 
@@ -306,6 +391,13 @@ GrowingTracker.startWithConfiguration(
 
 ```
 广告模块包括激活事件和深度链接，能帮助客户提供广告，活动的引导跳转和下载。
+
+iOS 端从 v2.2.0 起，引入原生广告库的方式按集成模式二选一：
+
+* **SPM 模式**：Xcode 打开 iOS 工程 → File → Add Package Dependencies… → 输入 `https://github.com/growingio/growingio-sdk-ios-autotracker.git`（版本 3.9.2 起）→ 产品列表中勾选 `GrowingModule_Advert` 添加到 app target（SPM 会自动与插件已依赖的同一个包去重）
+* **CocoaPods 模式**：Podfile 中添加 `pod 'GrowingAnalytics/Advert'`
+
+未引入广告库时调用 `doDeepLinkByUrl` 会静默降级并在控制台提示“广告模块未集成”，不会崩溃。HarmonyOS 平台暂不支持广告模块。
 
 :::info
 在 Flutter SDK 启动广告模块同时，原生端（包括Android和iOS端）都需要引入相应的模块代码，请参考：
